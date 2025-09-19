@@ -42,8 +42,10 @@ class FileSorter:
         for image in path_to_dir.rglob("*"):
             if os.path.isfile(image):
                 try:
-                    created_date = date.fromtimestamp(os.path.getmtime(image)).strftime("%Y_%m_%d")
-                    created_year = created_date.year
+                    timestamp = os.path.getmtime(image)
+                    file_date = date.fromtimestamp(timestamp)
+                    created_date = file_date.strftime("%Y_%m_%d")
+                    created_year = file_date.year
                     new_path_to_dir = f'{path_to_dir}/{created_year}/{created_date}'
                     os.makedirs(new_path_to_dir, exist_ok=True)
                     shutil.move(src=f'{image}', dst=f'{new_path_to_dir}')
